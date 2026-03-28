@@ -1,0 +1,42 @@
+{{define "view"}}
+{{template "layout" .}}
+{{end}}
+
+{{define "content"}}
+{{if .Flash}}
+<div class="flash success">{{.Flash}}</div>
+{{end}}
+
+<h2>{{.Contact.Name}}</h2>
+
+<div class="detail-card">
+    <div class="detail-row">
+        <strong>Email:</strong>
+        <span>{{.Contact.Email}}</span>
+    </div>
+    <div class="detail-row">
+        <strong>Phone:</strong>
+        <span>{{if .Contact.Phone}}{{.Contact.Phone}}{{else}}—{{end}}</span>
+    </div>
+    <div class="detail-row">
+        <strong>Notes:</strong>
+        <span>{{if .Contact.Notes}}{{.Contact.Notes}}{{else}}—{{end}}</span>
+    </div>
+    <div class="detail-row">
+        <strong>Created:</strong>
+        <span>{{.Contact.CreatedAt.Format "Jan 02, 2006 3:04 PM"}}</span>
+    </div>
+    <div class="detail-row">
+        <strong>Updated:</strong>
+        <span>{{.Contact.UpdatedAt.Format "Jan 02, 2006 3:04 PM"}}</span>
+    </div>
+</div>
+
+<div class="form-actions">
+    <a href="/contacts/{{.Contact.ID}}/edit" class="btn btn-primary">Edit</a>
+    <form method="POST" action="/contacts/{{.Contact.ID}}/delete" class="inline-form" onsubmit="return confirm('Delete this contact?')">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+    <a href="/" class="btn">Back to List</a>
+</div>
+{{end}}

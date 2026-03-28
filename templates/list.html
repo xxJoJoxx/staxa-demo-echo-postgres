@@ -1,0 +1,43 @@
+{{define "list"}}
+{{template "layout" .}}
+{{end}}
+
+{{define "content"}}
+{{if .Flash}}
+<div class="flash success">{{.Flash}}</div>
+{{end}}
+
+<div class="actions">
+    <a href="/contacts/new" class="btn btn-primary">Add Contact</a>
+</div>
+
+{{if .Contacts}}
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range .Contacts}}
+        <tr>
+            <td><a href="/contacts/{{.ID}}">{{.Name}}</a></td>
+            <td>{{.Email}}</td>
+            <td>{{.Phone}}</td>
+            <td class="action-links">
+                <a href="/contacts/{{.ID}}/edit">Edit</a>
+                <form method="POST" action="/contacts/{{.ID}}/delete" class="inline-form" onsubmit="return confirm('Delete this contact?')">
+                    <button type="submit" class="btn-link danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {{end}}
+    </tbody>
+</table>
+{{else}}
+<p class="empty">No contacts yet.</p>
+{{end}}
+{{end}}
