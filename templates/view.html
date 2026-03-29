@@ -1,42 +1,56 @@
 {{define "view"}}
-{{template "layout" .}}
-{{end}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Manager</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><a href="/">Contact Manager</a></h1>
+        </header>
+        <main>
+            {{if .Flash}}
+            <div class="flash success">{{.Flash}}</div>
+            {{end}}
 
-{{define "content"}}
-{{if .Flash}}
-<div class="flash success">{{.Flash}}</div>
-{{end}}
+            <h2>{{.Contact.Name}}</h2>
 
-<h2>{{.Contact.Name}}</h2>
+            <div class="detail-card">
+                <div class="detail-row">
+                    <strong>Email:</strong>
+                    <span>{{.Contact.Email}}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Phone:</strong>
+                    <span>{{if .Contact.Phone}}{{.Contact.Phone}}{{else}}—{{end}}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Notes:</strong>
+                    <span>{{if .Contact.Notes}}{{.Contact.Notes}}{{else}}—{{end}}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Created:</strong>
+                    <span>{{.Contact.CreatedAt.Format "Jan 02, 2006 3:04 PM"}}</span>
+                </div>
+                <div class="detail-row">
+                    <strong>Updated:</strong>
+                    <span>{{.Contact.UpdatedAt.Format "Jan 02, 2006 3:04 PM"}}</span>
+                </div>
+            </div>
 
-<div class="detail-card">
-    <div class="detail-row">
-        <strong>Email:</strong>
-        <span>{{.Contact.Email}}</span>
+            <div class="form-actions">
+                <a href="/contacts/{{.Contact.ID}}/edit" class="btn btn-primary">Edit</a>
+                <form method="POST" action="/contacts/{{.Contact.ID}}/delete" class="inline-form" onsubmit="return confirm('Delete this contact?')">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <a href="/" class="btn">Back to List</a>
+            </div>
+        </main>
     </div>
-    <div class="detail-row">
-        <strong>Phone:</strong>
-        <span>{{if .Contact.Phone}}{{.Contact.Phone}}{{else}}—{{end}}</span>
-    </div>
-    <div class="detail-row">
-        <strong>Notes:</strong>
-        <span>{{if .Contact.Notes}}{{.Contact.Notes}}{{else}}—{{end}}</span>
-    </div>
-    <div class="detail-row">
-        <strong>Created:</strong>
-        <span>{{.Contact.CreatedAt.Format "Jan 02, 2006 3:04 PM"}}</span>
-    </div>
-    <div class="detail-row">
-        <strong>Updated:</strong>
-        <span>{{.Contact.UpdatedAt.Format "Jan 02, 2006 3:04 PM"}}</span>
-    </div>
-</div>
-
-<div class="form-actions">
-    <a href="/contacts/{{.Contact.ID}}/edit" class="btn btn-primary">Edit</a>
-    <form method="POST" action="/contacts/{{.Contact.ID}}/delete" class="inline-form" onsubmit="return confirm('Delete this contact?')">
-        <button type="submit" class="btn btn-danger">Delete</button>
-    </form>
-    <a href="/" class="btn">Back to List</a>
-</div>
+</body>
+</html>
 {{end}}

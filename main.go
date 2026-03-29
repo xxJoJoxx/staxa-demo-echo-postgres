@@ -64,6 +64,7 @@ func main() {
 
 	// Page routes
 	e.GET("/", h.ListContacts)
+	e.GET("/contacts", h.ListContacts)
 	e.GET("/contacts/new", h.NewContactForm)
 	e.POST("/contacts", h.CreateContact)
 	e.GET("/contacts/:id", h.ViewContact)
